@@ -12,6 +12,6 @@ export function departureDate(arrival, months) {
 export function enquiryMessage({ name, email, arrival, months, note }, lang) {
   const departure = departureDate(arrival, Number(months));
   return lang === 'es'
-    ? `Hola, me interesa una estadía en Bogotá.\nNombre: ${name}\nEmail: ${email}\nLlegada: ${arrival}\nDuración: ${months} mes(es)\nSalida estimada: ${departure}\n${note || ''}\nQuisiera confirmar disponibilidad, tarifa y condiciones. Entiendo que esto no confirma una reserva.`
-    : `Hello, I am interested in a stay in Bogotá.\nName: ${name}\nEmail: ${email}\nArrival: ${arrival}\nLength: ${months} month(s)\nEstimated departure: ${departure}\n${note || ''}\nPlease confirm availability, rate and conditions. I understand this is not a confirmed booking.`;
+    ? `Hola, me interesa una estadía en Smart Studio, Bogotá.\nNombre: ${name}\nEmail: ${email}\nLlegada: ${arrival}\nDuración: ${months} mes(es)\nSalida estimada: ${departure}\n${note || ''}\nQuisiera confirmar disponibilidad, tarifa y condiciones. Entiendo que esto no confirma una reserva.`
+    : `Hello, I am interested in a stay at Smart Studio, Bogotá.\nName: ${name}\nEmail: ${email}\nArrival: ${arrival}\nLength: ${months} month(s)\nEstimated departure: ${departure}\n${note || ''}\nPlease confirm availability, rate and conditions. I understand this is not a confirmed booking.`;
 }
