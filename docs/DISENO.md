@@ -1,38 +1,24 @@
-# Dirección visual · Primera propuesta
+# Dirección visual · Smart Studio
 
-## Propósito
+Basada en el documento de marca (v1.0, 20 nov 2026): *contemporary boutique hospitality*, azul oscuro, crema y dorado, composiciones aireadas y una idea por bloque.
 
-Ayudar a un estudiante internacional a explorar una residencia y consultar una estadía de uno a doce meses. Transmitir comodidad y atención personal, sin convertir datos pendientes en promesas.
-
-## Sistema
+## Tokens
 
 | Token | Color | Uso |
 | --- | --- | --- |
-| Papel | `#f7f8f4` | Fondo claro con matiz mineral |
-| Tinta | `#263c43` | Tipografía, navegación y bloque de consulta |
-| Niebla | `#e7ede9` | Superficies y módulo de duración |
-| Piedra | `#b6b9aa` | Matiz secundario |
-| Texto secundario | `#58666a` | Párrafos y notas |
-| Línea | `#d6dcd5` | Separaciones |
+| `--paper` | `#fbf8f3` | Fondo principal |
+| `--cream` / `--sand` | `#f4ede2` / `#efe6d8` | Bandas cálidas |
+| `--ink` | `#14232b` | Texto, bandas oscuras, botones |
+| `--gold` | `#b58a4c` | Acentos, anillos del mapa, CTA secundario |
+| `--gold-deep` | `#86602b` | Texto dorado sobre crema (contraste AA) |
+| `--muted` | `#55636b` | Párrafos |
 
-Newsreader variable para titulares; cursiva real para las frases que expresan pertenencia. Manrope para lectura y controles. Tamaños y espaciado deliberados; sin degradados decorativos, dorados de lujo convencionales ni cuadrículas repetitivas de tarjetas.
+Newsreader para titulares (solo romana); Manrope para lectura y controles, 16 px como mínimo.
 
-## Composición
+## Decisiones
 
-```text
-Identidad        Navegación                Idioma / Consulta
-Promesa                         Fotografía amplia
-Contexto                        Duración mensual superpuesta
-Apartamento + detalle           Imagen de descanso
-Estadía                         Tres aspectos concretos
-Entorno + pestañas              Esquema ilustrativo
-Preguntas                       Respuestas desplegables
-Introducción personal           Formulario
-Identidad                       Avisos legales
-```
-
-El elemento distintivo es el rango **1—12** sobre la fotografía: expresa una condición real del producto y convierte la estadía larga en parte de la identidad. El esquema del entorno acompaña el concepto sin fingir una dirección verificada. En móvil la fotografía sigue al titular y los controles mantienen una secuencia natural.
-
-## Revisión de la propuesta
-
-Se descartó una estética de hotel con negro y dorado porque comunica estadías turísticas cortas. Se eligió una residencia luminosa con azul mineral y referencias domésticas: el objetivo es que el visitante imagine un semestre, no una noche. La paleta, la tipografía y la fotografía podrán adaptarse al diseño que entregue el cliente sin reescribir el flujo.
+- **Firma**: la tarjeta *Included in your stay* sobre la foto del hero. Es la primera prueba de la promesa; se ve en la primera pantalla de escritorio y al primer desplazamiento en móvil.
+- **Ritmo**: hero claro, banda oscura del kit, galería 3D, banda crema, mapa, banda arena del anfitrión, guía, banda oscura de tarifa y formulario. Ninguna sección repite «título + tres tarjetas».
+- **Mapa**: herramienta de decisión, no decoración. La lista ordenada por cercanía siempre está visible; el mapa 3D aporta contexto (edificios y anillos de 5 y 10 minutos).
+- **Honestidad**: la tarifa se marca como propuesta, las fotos como referencia, y la ubicación y las funciones inteligentes como pendientes de verificación.
+- **Excepción**: el titular aprobado tiene 8 palabras.

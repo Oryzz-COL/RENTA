@@ -1,85 +1,74 @@
-# RENTA · Residencia en Bogotá
+# Smart Studio · Bogotá
 
-Landing bilingüe (inglés/español) para un apartamento privado en el norte de Bogotá, orientada a estudiantes internacionales y estadías **desde un mes hasta un año**. Primera propuesta visual desarrollada por ORYZZ. El nombre **The Bogotá residence** es provisional.
+Landing bilingüe (inglés/español) para **Smart Studio**, un estudio amoblado de unos 25 m² en Torre Medina, Calle 134, norte de Bogotá, para estadías de **30 noches o más**. Reconstruida a partir de la landing conceptual de la socia y del documento *Smart Studio · Dirección conceptual de marca y experiencia* (v1.0, 20 nov 2026).
+
+> Feel at home in Bogotá. From day one.
 
 ## Ejecutar
 
-Requiere Node.js 22 o superior. No utiliza paquetes de terceros ni necesita `npm install`.
+Requiere Node.js 22 o superior. No hay dependencias que instalar.
 
 ```sh
-npm run dev
-# http://127.0.0.1:4173
-
+npm run dev      # http://127.0.0.1:4173
 npm test
-npm run build
+npm run build    # genera dist/
 npm run preview
 ```
 
-`npm run build` genera `dist/` con el sitio estático. Se puede alojar en cualquier hosting estático con dominio en la raíz. El servidor de desarrollo escucha únicamente en loopback; no es un servidor para producción. Para cambiar el puerto, configurar la variable `PORT`.
+`dist/` es un sitio estático; se puede publicar en Netlify, Vercel o cualquier hosting estático con el dominio en la raíz.
 
-## Qué está implementado
+## Secciones
 
-- Dirección visual propia: paleta mineral, azul tinta, Newsreader variable y Manrope; fuentes e imágenes locales.
-- Diseño adaptable, menú móvil, estados de foco, navegación por teclado y respeto por movimiento reducido.
-- Galería modal con filtros, miniaturas, flechas de teclado, cierre con Escape y retorno del foco.
-- Selector inglés/español, con preferencia local. El inglés es el idioma inicial por el público objetivo.
-- Entorno con pestañas accesibles y esquema ilustrativo, sin ubicación o distancias inventadas.
-- Preguntas frecuentes sobre duración, precio, servicios, visitas, mascotas y reservas.
-- Formulario con validación, meses de calendario y salida estimada (incluye fines de mes y años bisiestos).
-- En muestra: preparación y copia de consulta, sin transmisión de datos ni confirmación de reserva.
-- Punto de integración de WhatsApp; no utiliza un número ficticio.
-- Modales de términos, privacidad y cookies, identificados como borradores.
-- Aviso de privacidad y preferencias sin analítica ni cookies publicitarias.
-- Pruebas con el test runner nativo de Node y CI en GitHub Actions.
+1. **Hero** con la promesa de marca y la tarjeta del *Welcome Kit* sobre la foto (firma visual).
+2. **Welcome Kit**: recogida en aeropuerto, primer desayuno y café colombiano, contados como el recorrido del huésped.
+3. **El estudio en 3D**: anillo de fotos que se arrastra, desliza o recorre con flechas; clic para ampliar.
+4. **Incluido y funciones inteligentes**: limpieza semanal, agua filtrada, streaming; acceso, voz, espacio flexible, WiFi.
+5. **Mapa 3D del barrio** con 18 puntos reales (supermercados, universidad, salud, parques, comida, compras, transporte), filtros por categoría, anillos de 5 y 10 minutos a pie, línea al punto elegido y recorrido aéreo alrededor de la cuadra.
+6. **Alexander, el anfitrión** y el conductor opcional.
+7. **Guía de Bogotá**.
+8. **Tarifa propuesta**, inclusiones y preguntas frecuentes.
+9. **Consulta**: valida datos, calcula la salida estimada y copia el mensaje (o lo abre en WhatsApp cuando se active).
+
+Barra fija con tarifa y botón de disponibilidad después del hero. Selector EN/ES con preferencia local.
+
+## Mapa: cómo funciona y cómo configurarlo
+
+- Motor: **MapLibre GL JS 4.7.1**, alojado en `assets/vendor/maplibre/` (licencia BSD incluida).
+- Teselas: **OpenFreeMap** (estilo *positron*, datos de OpenStreetMap). **No requiere cuenta, token ni tarjeta**; por eso no se usó Mapbox.
+- La librería y las teselas solo se cargan cuando el visitante se acerca a la sección del barrio. La lista de lugares funciona aunque el mapa falle.
+- **Ubicación del estudio**: `property.location` en `src/config.js`. Es aproximada (Cra. 11 con Calle 134); hay que confirmarla en sitio y ajustar latitud y longitud.
+- **Puntos de interés**: arreglo `places` en `src/config.js` (nombre, categoría, coordenadas y descripción EN/ES). Las distancias y los minutos a pie se calculan solos en `src/geo.js` (línea recta × 1,3 a 80 m/min).
+- Colores del mapa: tokens `--map-*` y `--c-*` en `src/styles.css`.
+
+Si más adelante se prefiere Mapbox (por ejemplo, para vista satelital), hay que crear una cuenta en mapbox.com, generar un token público restringido al dominio y cambiar `STYLE_URL` en `src/map.js`.
+
+## Galería 3D y fotografía
+
+`src/gallery3d.js` monta un anillo 3D con CSS, sin librerías. Las fotos se definen en `property.photos` (`src/config.js`); se ve mejor con 6 a 10 fotos. Las actuales son **referencias de Unsplash**, no el estudio real. La lista de tomas está en `docs/CONTENIDO-PENDIENTE.md`.
 
 ## Organización
 
 ```text
-assets/                Imágenes, tipografías, licencias y símbolo
-src/config.js          Información y contactos del inmueble
-src/content.js         Todos los textos en inglés y español, incluidos borradores legales
-src/booking.js         Fechas y composición de consultas
-src/app.js             Componentes e interacciones, sin framework
-src/styles.css         Sistema visual y adaptación a pantallas
-scripts/               Servidor, build y descarga reproducible de referencias
-tests/                 Pruebas de reglas de estadía y contenido
-docs/                  Dirección de diseño y datos pendientes para publicar
-.github/workflows/     Validación automática
+assets/                 Fotos, fuentes, favicon y MapLibre (vendor/)
+src/config.js           Datos del inmueble, fotos, ubicación y puntos del mapa
+src/content.js          Todos los textos en inglés y español
+src/app.js              Página e interacciones
+src/map.js              Mapa 3D del barrio
+src/gallery3d.js        Galería en anillo 3D
+src/geo.js              Distancias y tiempos a pie
+src/booking.js          Fechas y mensaje de consulta
+src/icons.js            Iconos de línea y monograma
+src/styles.css          Sistema visual (tokens en :root)
+tests/                  Pruebas con el runner nativo de Node
+docs/                   Dirección de diseño y datos pendientes
 ```
 
-## Reemplazar datos y diseño
+## Reservas, WhatsApp y privacidad
 
-1. Completar el inventario en `docs/CONTENIDO-PENDIENTE.md` con el propietario.
-2. Editar `src/config.js` para fotos, contactos y datos confirmados.
-3. Ajustar los textos en ambos idiomas en `src/content.js`; no traducir únicamente la portada.
-4. Actualizar el nombre en `property.brand`, el logotipo tipográfico de `src/app.js`, los títulos/metadatos de `index.html` y `src/app.js`, y el favicon.
-5. Ajustar los tokens de `:root` y los estilos en `src/styles.css` cuando llegue el diseño aprobado.
-6. Sustituir las fotos de inspiración por fotos propias y actualizar avisos, textos alternativos y créditos.
+No hay backend, pagos ni reservas automáticas: el formulario **prepara una consulta** y la copia. WhatsApp se activa con `isLive()` en `src/app.js` cuando `preview` es `false` y están `whatsapp`, `legalOwner` y `privacyEmail` en `src/config.js`, después de completar los avisos legales.
 
-## Reservas y WhatsApp
-
-Esta versión **no tiene backend, calendario de disponibilidad, pasarela de pago ni reservas automáticas**. Las solicitudes son consultas sujetas a confirmación por el anfitrión.
-
-La integración de WhatsApp tiene una compuerta en `isLive()` de `src/app.js`: requiere `preview: false`, `whatsapp` de 10–15 dígitos internacionales, `legalOwner` y `privacyEmail`. Cambiar estos campos solamente **no basta para publicar**: primero completar el aviso legal definitivo, revisar el flujo, reemplazar los mensajes de muestra (`bookNotice`, `noSend`, `legalIntro`, `legalSections`) y validar el destino con el propietario. Los campos legales se usan actualmente para bloquear la activación, no para generar avisos definitivos.
-
-Después de completar ese trabajo, el botón del formulario abre `wa.me` con el mensaje codificado; el visitante elige si lo envía. El botón flotante abre el chat. Con la configuración actual, el botón flotante dirige al formulario y explica que el contacto está pendiente.
-
-## Privacidad y preparación para publicar
-
-Los textos legales son borradores de producto, **no una certificación de cumplimiento ni un contrato definitivo**. Deben adaptarse al responsable y a las condiciones reales antes de recibir consultas. Ver la lista de publicación en `docs/CONTENIDO-PENDIENTE.md`.
-
-No se transmiten ni guardan en disco los datos del formulario. Solo se utilizan las claves locales `residence-language` y `residence-privacy`; el sitio funciona si el navegador bloquea ese almacenamiento. No se incluyen scripts analíticos, mapas externos ni llamadas a proveedores de fuentes al cargar la página.
-
-El sitio tiene `noindex, nofollow` por tratarse de una muestra. Al publicar la versión definitiva: revisar metadatos, configurar dominio/canonical, vista previa social y sitemap; retirar `noindex` **solo después** de reemplazar referencias y validar los datos.
+Al navegar, el sitio solo contacta a OpenFreeMap para las teselas del mapa y guarda únicamente la clave local `smart-studio-language`. Tiene `noindex, nofollow` por ser una vista conceptual; hay que retirarlo al publicar la versión aprobada.
 
 ## Recursos
 
-Fotografías de referencia descargadas de Unsplash: sus identificadores están en `src/config.js` y se documentan en `assets/CREDITS.md`. No corresponden al apartamento. Los archivos se incluyen para que el sitio no dependa de solicitudes externas. Los derechos y atribuciones de cada recurso deben revisarse para la publicación final.
-
-Newsreader y Manrope se distribuyen bajo SIL Open Font License; las licencias están incluidas en `assets/`. Para refrescar las referencias: `node scripts/fetch-assets.mjs` (requiere conexión). No hace falta ejecutar este script para desarrollar o construir el sitio; las versiones descargadas están guardadas en Git.
-
-## Validación
-
-`npm test` verifica duración mensual, fechas inválidas, fines de mes, años bisiestos, mensajes bilingües, configuración de muestra, integridad de recursos y correspondencia de idiomas. `npm run build` verifica los recursos requeridos y genera el paquete estático.
-
-La comprobación manual cubre galería y filtros, formulario en español, menú móvil, pestañas del entorno y aviso legal. Ver `docs/QA.md` para resultados y alcance.
+Fotografías de referencia de Unsplash (ver `assets/CREDITS.md`). Newsreader y Manrope bajo SIL OFL. MapLibre GL JS bajo licencia BSD-3. Datos del mapa © colaboradores de OpenStreetMap.
