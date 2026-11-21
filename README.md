@@ -23,7 +23,7 @@ npm run preview
 2. **Welcome Kit**: recogida en aeropuerto, primer desayuno y café colombiano, contados como el recorrido del huésped.
 3. **El estudio en 3D**: anillo de fotos que se arrastra, desliza o recorre con flechas; clic para ampliar.
 4. **Incluido y funciones inteligentes**: limpieza semanal, agua filtrada, streaming; acceso, voz, espacio flexible, WiFi.
-5. **Mapa 3D del barrio** con 18 puntos reales (supermercados, universidad, salud, parques, comida, compras, transporte), filtros por categoría, anillos de 5 y 10 minutos a pie, línea al punto elegido y recorrido aéreo alrededor de la cuadra.
+5. **Mapa 3D del barrio (Mapbox)** con 18 puntos reales (supermercados, universidad, salud, parques, comida, compras, transporte), filtros por categoría, anillos de 5 y 10 minutos a pie, línea al punto elegido y recorrido aéreo alrededor de la cuadra.
 6. **Alexander, el anfitrión** y el conductor opcional.
 7. **Guía de Bogotá**.
 8. **Tarifa propuesta**, inclusiones y preguntas frecuentes.
@@ -33,14 +33,12 @@ Barra fija con tarifa y botón de disponibilidad después del hero. Selector EN/
 
 ## Mapa: cómo funciona y cómo configurarlo
 
-- Motor: **MapLibre GL JS 4.7.1**, alojado en `assets/vendor/maplibre/` (licencia BSD incluida).
-- Teselas: **OpenFreeMap** (estilo *positron*, datos de OpenStreetMap). **No requiere cuenta, token ni tarjeta**; por eso no se usó Mapbox.
-- La librería y las teselas solo se cargan cuando el visitante se acerca a la sección del barrio. La lista de lugares funciona aunque el mapa falle.
-- **Ubicación del estudio**: `property.location` en `src/config.js`. Es aproximada (Cra. 11 con Calle 134); hay que confirmarla en sitio y ajustar latitud y longitud.
-- **Puntos de interés**: arreglo `places` en `src/config.js` (nombre, categoría, coordenadas y descripción EN/ES). Las distancias y los minutos a pie se calculan solos en `src/geo.js` (línea recta × 1,3 a 80 m/min).
-- Colores del mapa: tokens `--map-*` y `--c-*` en `src/styles.css`.
-
-Si más adelante se prefiere Mapbox (por ejemplo, para vista satelital), hay que crear una cuenta en mapbox.com, generar un token público restringido al dominio y cambiar `STYLE_URL` en `src/map.js`.
+- Motor principal: **Mapbox GL JS 3.8** con el estilo **Mapbox Standard**: edificios reales en 3D, árboles, monumentos e iluminación. Se carga desde `api.mapbox.com` solo cuando el visitante se acerca a la sección del barrio.
+- Token: **no se guarda en Git**. Va en la variable de entorno `MAPBOX_TOKEN` (en local, en un archivo `.env` ignorado por Git; ver `.env.example`; en Netlify/Vercel, en las variables de entorno del proyecto). `npm run dev` y `npm run build` lo inyectan en `src/config.js`. Es el **token público** (`pk.`); antes de publicar, **restringirlo a las URL del sitio** en console.mapbox.com → Tokens → *URL restrictions*. Un token secreto (`sk.`) se rechaza.
+- Cuenta sin método de pago: Mapbox limita el uso (unas 5.000 cargas de mapa web al mes) y **bloquea las imágenes satelitales**. Al añadir un método de pago se mantiene el nivel gratuito (50.000 cargas al mes) y se puede activar la vista satélite con `mapboxSatellite: true`.
+- Sin `MAPBOX_TOKEN`, el sitio usa la alternativa sin cuenta: **MapLibre GL** alojado en `assets/vendor/maplibre/` con teselas de **OpenFreeMap**.
+- **Ubicación del estudio**: `property.location`, tomada de la geocodificación de Mapbox para «Carrera 11 134-27». Es una dirección interpolada: confirmarla en sitio.
+- **Puntos de interés**: arreglo `places` en `src/config.js` (nombre, categoría, coordenadas de OpenStreetMap y descripción EN/ES). Las distancias y los minutos a pie se calculan solos en `src/geo.js` (línea recta × 1,3 a 80 m/min).
 
 ## Galería 3D y fotografía
 
@@ -67,8 +65,8 @@ docs/                   Dirección de diseño y datos pendientes
 
 No hay backend, pagos ni reservas automáticas: el formulario **prepara una consulta** y la copia. WhatsApp se activa con `isLive()` en `src/app.js` cuando `preview` es `false` y están `whatsapp`, `legalOwner` y `privacyEmail` en `src/config.js`, después de completar los avisos legales.
 
-Al navegar, el sitio solo contacta a OpenFreeMap para las teselas del mapa y guarda únicamente la clave local `smart-studio-language`. Tiene `noindex, nofollow` por ser una vista conceptual; hay que retirarlo al publicar la versión aprobada.
+Al navegar, el sitio solo contacta al proveedor del mapa (Mapbox, u OpenFreeMap sin token) cuando el visitante llega al barrio, y guarda únicamente la clave local `smart-studio-language`. Tiene `noindex, nofollow` por ser una vista conceptual; hay que retirarlo al publicar la versión aprobada.
 
 ## Recursos
 
-Fotografías de referencia de Unsplash (ver `assets/CREDITS.md`). Newsreader y Manrope bajo SIL OFL. MapLibre GL JS bajo licencia BSD-3. Datos del mapa © colaboradores de OpenStreetMap.
+Fotografías de referencia de Unsplash (ver `assets/CREDITS.md`). Newsreader y Manrope bajo SIL OFL. Mapa © Mapbox y © colaboradores de OpenStreetMap; MapLibre GL JS bajo licencia BSD-3.
