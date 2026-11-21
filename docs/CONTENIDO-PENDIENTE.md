@@ -1,44 +1,24 @@
-# Datos del propietario y preparación de lanzamiento
+# Pendientes antes del lanzamiento
 
-## Identidad y contacto
+## Ubicación y mapa
+- [ ] Confirmar las coordenadas exactas de Torre Medina y ajustar `property.location` en `src/config.js`.
+- [ ] Validar a pie los tiempos a los puntos clave (Country Club, Éxito, El Bosque, Unicentro, Calle 140) y si hay un Oxxo en el primer piso del edificio.
+- [ ] Añadir o quitar los lugares que recomiende Alexander (arreglo `places`).
+- [ ] Opcional: video o foto de dron con marcadores, como pide la dirección de marca.
 
-- [ ] Nombre definitivo y aprobación de identidad visual.
-- [ ] Nombre o razón social del responsable, identificación y domicilio que corresponda publicar.
-- [ ] WhatsApp internacional verificado y correo de contacto.
-- [ ] Contacto de privacidad y procedimiento de atención de solicitudes.
+## Fotografía (para la galería 3D)
+- [ ] 8 a 10 fotos horizontales del estudio real con luz cálida: sala y cama, modo oficina, cocina, baño, vista al Country Club, detalles y zonas comunes (gimnasio, coworking, rooftop, BBQ).
+- [ ] Fotos del Welcome Kit (café, desayuno) y un retrato auténtico de Alexander.
+- [ ] Opcional: recorrido 360° o escaneo 3D (Matterport, Polycam o cámara 360) para una vista inmersiva.
 
-## Apartamento
-
-- [ ] Dirección exacta, barrio y enlace de ubicación confirmado; Cedritos es una hipótesis del brief.
-- [ ] Fotografías propias aprobadas y permiso de uso.
-- [ ] Área, distribución, capacidad máxima y camas.
-- [ ] Mobiliario, cocina, escritorio, electrodomésticos y elementos de descanso reales.
-- [ ] Internet, servicios públicos, limpieza y cobros adicionales.
-- [ ] Zonas comunes, seguridad, parqueadero, acceso y accesibilidad verificados.
-- [ ] Condiciones de visitas, huéspedes adicionales, mascotas, tabaco y ruido.
-
-## Entorno
-
-- [ ] Universidad/sede de interés y rutas verificadas; no afirmar cercanía a El Bosque sin validar.
-- [ ] Supermercados, cafés, Oxxo u otros servicios a partir de la dirección real.
-- [ ] Distancias y tiempos indicando medio de transporte y carácter aproximado.
-
-## Arriendo
-
-- [ ] Tarifa, moneda, forma de pago, depósito y cargos; esta muestra no propone precios.
-- [ ] Duración mínima definitiva y condiciones para estadías de hasta un año.
-- [ ] Proceso de validación de disponibilidad y contrato.
-- [ ] Llegada y salida, extensiones, cancelaciones, devoluciones y salida anticipada.
-- [ ] Revisión profesional de la modalidad contractual y las obligaciones aplicables.
+## Datos de la oferta
+- [ ] Tarifa final, comisiones por canal, depósito y forma de pago.
+- [ ] Cama Queen o King; funciones de domótica instaladas; streaming, agua filtrada y limpieza semanal.
+- [ ] Condiciones de la recogida en aeropuerto, contenido del desayuno y presentación del café.
+- [ ] Reglas y acceso a zonas comunes; idioma y tiempos de respuesta del anfitrión.
+- [ ] Políticas de reserva, cancelación y salida anticipada.
 
 ## Publicación
-
-- [ ] Reemplazar los borradores legales bilingües con textos aprobados y completos.
-- [ ] Confirmar finalidades, autorización cuando corresponda, conservación y destinatarios de datos.
-- [ ] Revisar privacidad de WhatsApp y cualquier proveedor adicional.
-- [ ] Sustituir fotos de referencia y eliminar los avisos de muestra solo cuando corresponda.
-- [ ] Actualizar nombre, wordmark, favicon y metadatos en todos los lugares señalados en README.
-- [ ] Activar y probar WhatsApp con el contacto del propietario; actualizar el texto del flujo real.
-- [ ] Revisar escritorio, móvil, teclado, contraste, galería y formulario con contenido definitivo.
-- [ ] Configurar hosting HTTPS, dominio, SEO y política de caché/seguridad del proveedor.
-- [ ] Retirar `noindex` una vez aprobado el sitio final.
+- [ ] WhatsApp verificado, correo, responsable legal y contacto de privacidad.
+- [ ] Textos legales y aviso de privacidad aprobados.
+- [ ] Dominio, HTTPS, metadatos sociales y retirar `noindex`.

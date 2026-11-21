@@ -1,19 +1,49 @@
-// One source of truth. Keep unconfirmed facts null; never substitute invented claims.
+// One source of truth. Keep unconfirmed facts null or flagged; never substitute invented claims.
 export const property = {
-  brand: 'The Bogotá residence', // Working title, replace after naming approval.
+  brand: 'Smart Studio',
   preview: true,
-  minimumMonths: 1,
+  minimumNights: 30,
   maximumMonths: 12,
+  proposedRateUSD: 1100, // Proposed introductory rate from the owner's concept. Not final.
   whatsapp: null, // International digits only, e.g. 573001234567, once verified.
   email: null,
-  address: null,
-  mapUrl: null,
+  address: 'Torre Medina, Cra. 11 #134-27, Bogotá',
   legalOwner: null,
   privacyEmail: null,
+  // Approximate pin for Cra. 11 with Calle 134 (OpenStreetMap). Confirm on site and adjust before launch.
+  location: { lng: -74.0356, lat: 4.7137, approximate: true },
   photos: [
-    { src: '/assets/living.jpg', category: 'living', es: 'Luz, espacio y una pausa', en: 'Light, space, and a little stillness', credit: 'Unsplash · photo-1600210492486-724fe5c67fb0' },
-    { src: '/assets/bedroom.jpg', category: 'rest', es: 'Un lugar para desconectar', en: 'Room to switch off', credit: 'Unsplash · photo-1611892440504-42a792e24d32' },
-    { src: '/assets/kitchen.jpg', category: 'living', es: 'Lo cotidiano, a tu manera', en: 'Everyday rituals, your way', credit: 'Unsplash · photo-1556912172-45b7abe8b7e1' },
-    { src: '/assets/details.jpg', category: 'details', es: 'Los detalles hacen hogar', en: 'The details that feel like home', credit: 'Unsplash · photo-1494438639946-1ebd1d20bf85' }
+    { src: '/assets/living.jpg', en: 'Living and lounge', es: 'Sala y descanso' },
+    { src: '/assets/bedroom.jpg', en: 'Bed, ready to rest', es: 'La cama, lista para descansar' },
+    { src: '/assets/kitchen.jpg', en: 'Equipped kitchen', es: 'Cocina equipada' },
+    { src: '/assets/workspace.jpg', en: 'Room to work', es: 'Espacio para trabajar' },
+    { src: '/assets/bathroom.jpg', en: 'Bathroom', es: 'Baño' },
+    { src: '/assets/studio.jpg', en: 'Day mode', es: 'Modo día' },
+    { src: '/assets/kitchen2.jpg', en: 'Morning coffee corner', es: 'Rincón del café' },
+    { src: '/assets/details.jpg', en: 'Calm details', es: 'Detalles en calma' }
   ]
 };
+
+// Points of interest, coordinates from OpenStreetMap (Nominatim) in November 2026.
+// Distances on the page are straight-line estimates computed from property.location.
+export const placeCategories = ['everyday', 'study', 'health', 'parks', 'food', 'shopping', 'transport'];
+export const places = [
+  { id: 'country', cat: 'parks', name: 'Country Club de Bogotá', lng: -74.0362, lat: 4.7128, en: 'Green views across the street', es: 'Vista verde al frente' },
+  { id: 'exito', cat: 'everyday', name: 'Éxito Calle 134', lng: -74.0341, lat: 4.7123, en: 'Large supermarket', es: 'Supermercado grande' },
+  { id: 'carulla', cat: 'everyday', name: 'Carulla Cra. 11', lng: -74.0356, lat: 4.7194, en: 'Supermarket', es: 'Supermercado' },
+  { id: 'farmatodo', cat: 'everyday', name: 'Farmatodo Calle 140', lng: -74.0322, lat: 4.7174, en: 'Pharmacy and essentials', es: 'Farmacia y básicos' },
+  { id: 'oxxo', cat: 'everyday', name: 'Oxxo Calle 140', lng: -74.0400, lat: 4.7210, en: 'Convenience store', es: 'Tienda de conveniencia' },
+  { id: 'bosque', cat: 'study', name: 'Universidad El Bosque', lng: -74.0314, lat: 4.7107, en: 'University campus', es: 'Campus universitario' },
+  { id: 'santafe', cat: 'health', name: 'Fundación Santa Fe de Bogotá', lng: -74.0329, lat: 4.6966, en: 'Major hospital', es: 'Hospital de referencia' },
+  { id: 'oftalmo', cat: 'health', name: 'Instituto Nacional de Oftalmología', lng: -74.0293, lat: 4.7035, en: 'Eye clinic', es: 'Clínica oftalmológica' },
+  { id: 'ginebra', cat: 'parks', name: 'Parque Ginebra Norte', lng: -74.0290, lat: 4.7091, en: 'Neighborhood park', es: 'Parque de barrio' },
+  { id: 'bellasuiza', cat: 'parks', name: 'Parque Bella Suiza', lng: -74.0318, lat: 4.7048, en: 'Park and green walks', es: 'Parque y caminatas' },
+  { id: 'bodytech', cat: 'parks', name: 'Bodytech Calle 138', lng: -74.0346, lat: 4.7175, en: 'Gym', es: 'Gimnasio' },
+  { id: 'c140', cat: 'food', name: 'Calle 140', lng: -74.0385, lat: 4.7204, en: 'Restaurants and cafés', es: 'Restaurantes y cafés' },
+  { id: 'jv138', cat: 'food', name: 'Juan Valdez Calle 138', lng: -74.0293, lat: 4.7154, en: 'Colombian coffee', es: 'Café colombiano' },
+  { id: 'usaquen', cat: 'food', name: 'Usaquén', lng: -74.0309, lat: 4.6952, en: 'Historic square, Sunday market', es: 'Plaza histórica y mercado dominical' },
+  { id: 'unicentro', cat: 'shopping', name: 'Unicentro', lng: -74.0413, lat: 4.7022, en: 'Shopping mall', es: 'Centro comercial' },
+  { id: 'puertasol', cat: 'shopping', name: 'C.C. Puerta del Sol', lng: -74.0365, lat: 4.7197, en: 'Shopping center', es: 'Centro comercial' },
+  { id: 'palatino', cat: 'shopping', name: 'C.C. Palatino', lng: -74.0293, lat: 4.7157, en: 'Shopping center', es: 'Centro comercial' },
+  { id: 'busav9', cat: 'transport', name: 'Av. Carrera 9 bus stop', lng: -74.0325, lat: 4.7118, en: 'City bus (SITP) on Av. 9', es: 'Paradero SITP en la Av. 9' }
+];

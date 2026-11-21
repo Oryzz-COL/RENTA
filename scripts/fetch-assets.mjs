@@ -1,9 +1,9 @@
-// Run only to refresh reference images/fonts. The website never requests third-party assets.
+// Run only to refresh reference images/fonts. At runtime the site only contacts OpenFreeMap for map tiles.
 import { writeFile, mkdir } from 'node:fs/promises';
 await mkdir('assets', { recursive: true });
-const photos = { living: 'photo-1600210492486-724fe5c67fb0', bedroom: 'photo-1611892440504-42a792e24d32', kitchen: 'photo-1556912172-45b7abe8b7e1', details: 'photo-1494438639946-1ebd1d20bf85' };
+const photos = { living: 'photo-1600210492486-724fe5c67fb0', bedroom: 'photo-1611892440504-42a792e24d32', kitchen: 'photo-1556912172-45b7abe8b7e1', details: 'photo-1494438639946-1ebd1d20bf85', studio: 'photo-1616486338812-3dadae4b4ace', kitchen2: 'photo-1556911220-bff31c812dba', bathroom: 'photo-1620626011761-996317b8d101', workspace: 'photo-1497366754035-f200968a6e72', food: 'photo-1517248135467-4c7edcad34c4', coffee: 'photo-1493857671505-72967e2e2760' };
 for (const [name, id] of Object.entries(photos)) {
-  const response = await fetch(`https://images.unsplash.com/${id}?w=${name === 'living' ? 2000 : 1200}&q=85&fit=crop`);
+  const response = await fetch(`https://images.unsplash.com/${id}?w=${name === 'living' ? 2000 : 1400}&q=${name === 'living' ? 85 : 78}&fit=crop&fm=jpg`);
   if (!response.ok) throw new Error(`${name}: ${response.status}`);
   await writeFile(`assets/${name}.jpg`, Buffer.from(await response.arrayBuffer()));
   console.log(`Downloaded ${name}.jpg`);
