@@ -4,7 +4,7 @@ import { departureDate, localDate, enquiryMessage } from './booking.js';
 import { distanceMeters, walkMinutes, formatDistance } from './geo.js';
 import { icons, mark } from './icons.js';
 import { mountGallery } from './gallery3d.js';
-import { createMap } from './map.js';
+import { createMap, usesMapbox } from './map.js';
 
 const storage = {
   get(key) { try { return localStorage.getItem(key); } catch { return null; } },
@@ -151,13 +151,13 @@ function render() {
           </div>
           <div class="hood-grid">
             <div class="map-shell">
-              <div class="map" id="map" role="region" aria-label="${t.mapTitle}">
-                <button type="button" class="map-poster">${icons.pin}<span>${t.mapLoad}</span></button>
-              </div>
+              <div class="map" id="map" role="region" aria-label="${t.mapTitle}"></div>
+              <button type="button" class="map-poster">${icons.pin}<span>${t.mapLoad}</span></button>
               <div class="map-actions">
                 <button type="button" class="button button-small map-orbit">${icons.orbit}${t.mapOrbit}</button>
                 <button type="button" class="button button-small button-ghost map-reset">${t.mapReset}</button>
               </div>
+              ${usesMapbox() && property.mapboxSatellite ? `<div class="map-views" role="group" aria-label="${t.mapTitle}">${Object.entries(t.mapViews).map(([k, v], i) => `<button type="button" class="map-view" data-view="${k}" aria-pressed="${i === 0}">${v}</button>`).join('')}</div>` : ''}
             </div>
             <ol class="places">${list.map(p => placeRow(p, t)).join('')}</ol>
           </div>
@@ -299,8 +299,8 @@ function wire(t) {
         select(id);
         document.querySelector(`.place[data-place="${id}"]`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       } });
-      mapView.ready.then(() => { el.classList.remove('is-loading'); el.querySelector('.map-poster')?.remove(); mapView.filter(activeCat); })
-        .catch(() => { el.classList.remove('is-loading'); el.classList.add('is-failed'); });
+      mapView.ready.then(() => { el.classList.remove('is-loading'); document.querySelector('.map-poster')?.remove(); mapView.filter(activeCat); })
+        .catch(() => { el.classList.remove('is-loading'); el.classList.add('is-failed'); document.querySelector('.map-poster')?.classList.add('is-failed'); });
     }
     return mapView;
   };
@@ -313,6 +313,10 @@ function wire(t) {
     mapView?.filter(activeCat);
   }));
   document.querySelector('.map-orbit').addEventListener('click', () => ensureMap().orbit());
+  document.querySelectorAll('.map-view').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.map-view').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+    ensureMap().setView(b.dataset.view);
+  }));
   document.querySelector('.map-reset').addEventListener('click', () => {
     document.querySelectorAll('.place').forEach(b => b.setAttribute('aria-current', 'false'));
     ensureMap().reset();

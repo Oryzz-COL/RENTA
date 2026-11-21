@@ -54,6 +54,10 @@ test('copy keeps the brand rules: no luxury filler and the welcome kit is never 
     assert.doesNotMatch(text, /\bfree\b|\bgratis\b/);
   }
 });
+test('only a public Mapbox token can be configured', () => {
+  if (property.mapboxToken !== null) assert.match(property.mapboxToken, /^pk\.[\w-]+\.[\w-]+$/);
+  assert.equal(typeof property.mapboxSatellite, 'boolean');
+});
 test('preview is excluded from search indexing', async () => {
   assert.match(await readFile('index.html', 'utf8'), /name="robots" content="noindex, nofollow"/);
 });

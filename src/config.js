@@ -8,10 +8,15 @@ export const property = {
   whatsapp: null, // International digits only, e.g. 573001234567, once verified.
   email: null,
   address: 'Torre Medina, Cra. 11 #134-27, Bogotá',
+  // Mapbox public token (starts with pk.). Restrict it to the site's URLs in account.mapbox.com.
+  // Leave null to use the no-account MapLibre + OpenFreeMap fallback.
+  mapboxToken: null, // Injected from MAPBOX_TOKEN (.env or hosting env) by scripts/serve.mjs and scripts/build.mjs.
+  // Satellite tiles need a payment method on the Mapbox account (the free tier still applies). Set true once added.
+  mapboxSatellite: false,
   legalOwner: null,
   privacyEmail: null,
-  // Approximate pin for Cra. 11 with Calle 134 (OpenStreetMap). Confirm on site and adjust before launch.
-  location: { lng: -74.0356, lat: 4.7137, approximate: true },
+  // Pin from Mapbox geocoding of "Carrera 11 134-27" (interpolated address). Confirm on site before launch.
+  location: { lng: -74.0368, lat: 4.7145, approximate: true },
   photos: [
     { src: '/assets/living.jpg', en: 'Living and lounge', es: 'Sala y descanso' },
     { src: '/assets/bedroom.jpg', en: 'Bed, ready to rest', es: 'La cama, lista para descansar' },

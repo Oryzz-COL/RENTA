@@ -1,8 +1,11 @@
-import { mkdir, cp, access, rm } from 'node:fs/promises';
+import { mkdir, cp, access, rm, readFile, writeFile } from 'node:fs/promises';
 import { property } from '../src/config.js';
+import { injectToken, mapboxToken } from './env.mjs';
 await rm('dist', { recursive: true, force: true });
 await mkdir('dist', { recursive: true });
 for (const name of ['index.html', 'src', 'assets']) await cp(name, `dist/${name}`, { recursive: true });
 const required = [...property.photos.map(p => p.src.slice(1)), 'assets/food.jpg', 'assets/coffee.jpg', 'assets/newsreader.woff2', 'assets/manrope.woff2', 'assets/vendor/maplibre/maplibre-gl.js', 'assets/vendor/maplibre/maplibre-gl.css'];
 for (const file of required) await access(`dist/${file}`);
-console.log('Static site built in dist/');
+const token = mapboxToken();
+await writeFile('dist/src/config.js', injectToken(await readFile('dist/src/config.js', 'utf8'), token));
+console.log(`Static site built in dist/ (${token ? 'Mapbox map' : 'no MAPBOX_TOKEN: MapLibre fallback map'})`);

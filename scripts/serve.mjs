@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
+import { injectToken } from './env.mjs';
 const root = path.resolve(process.argv[2] || '.');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.woff2': 'font/woff2' };
 const server = http.createServer(async (req, res) => {
@@ -12,8 +13,9 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(404).end('Not found'); return;
     }
     if (!(await stat(target)).isFile()) throw new Error('Not a file');
-    res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin' });
-    res.end(await readFile(target));
+    res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin' });
+    const body = await readFile(target);
+    res.end(relative.replace(/\\/g, '/') === 'src/config.js' ? injectToken(body.toString('utf8')) : body);
   } catch { res.writeHead(404).end('Not found'); }
 });
 const port = Number(process.env.PORT || 4173);
